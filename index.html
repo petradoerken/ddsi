@@ -177,18 +177,58 @@
 
 <nav>
   <div class="nav-logo" onclick="showPage('ddsi')" style="cursor:pointer">
+    <img src="logo.png" alt="Logo">
     <span class="nav-logo-main">D&amp;D Strategic Impact</span>
     <span class="nav-logo-sub">A D&amp;D Legacy Capital Company</span>
   </div>
   <div class="nav-links">
     <span class="nav-link" onclick="showPage('ddsi')">Overview</span>
-    <span class="nav-link" onclick="scrollTo('portfolio-section')">Portfolio</span>
-    <span class="nav-link" onclick="scrollTo('advisory-section')">Advisory</span>
+    <span class="nav-link" onclick="scrollToSection('portfolio-section')">Portfolio</span>
+    <span class="nav-link" onclick="scrollToSection('advisory-section')">Advisory</span>
     <span class="nav-link" onclick="showPage('hub')">Tech Hub</span>
     <span class="nav-link" onclick="showPage('podcast')">Podcast</span>
-    <span class="nav-link nav-cta" onclick="scrollTo('contact-section')">Engage</span>
+    <span class="nav-link nav-cta" onclick="scrollToSection('contact-section')">Engage</span>
   </div>
 </nav>
+
+<script>
+function showPage(id) {
+  // 1. Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  
+  // 2. Show requested page
+  const targetPage = document.getElementById('page-' + id);
+  if (targetPage) {
+    targetPage.classList.add('active');
+  }
+
+  // 3. Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 4. Update Nav active states
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+}
+
+function scrollToSection(id) {
+  // Ensure we are on the main DDSI page first
+  showPage('ddsi');
+  
+  // Wait a split second for the page to become 'display: block' before scrolling
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) {
+      const navHeight = document.querySelector('nav').offsetHeight;
+      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, 100);
+}
+</script>
 
 <!-- ═══════════════════════════════════ DDSI PAGE ═══════════════════════════════════ -->
 <div id="page-ddsi" class="page active">
